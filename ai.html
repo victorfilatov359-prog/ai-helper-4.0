@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>БыстроБот — 100 рецептов | AI помощник</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge">⚡ AI-помощник • 100 рецептов • до 15 минут</div>
+            <h1>БыстроБот</h1>
+            <div class="subhead">Выбери продукты из холодильника — получи рецепт за 5 секунд</div>
+            <div class="stats" id="stats"></div>
+        </div>
+        <div class="grid">
+            <div class="filters-panel">
+                <h2>🥕 Что у вас есть?</h2>
+                <div class="ingredient-group">
+                    <label>🥩 Мясо & Рыба</label>
+                    <div class="checkbox-grid" id="group-protein"></div>
+                </div>
+                <div class="ingredient-group">
+                    <label>🥚 Яйца & Молочка</label>
+                    <div class="checkbox-grid" id="group-dairy"></div>
+                </div>
+                <div class="ingredient-group">
+                    <label>🥦 Овощи & Зелень</label>
+                    <div class="checkbox-grid" id="group-veggies"></div>
+                </div>
+                <div class="ingredient-group">
+                    <label>🍝 Бакалея & Крупы</label>
+                    <div class="checkbox-grid" id="group-pantry"></div>
+                </div>
+                <div class="ingredient-group">
+                    <label>🧂 Соусы & Специи</label>
+                    <div class="checkbox-grid" id="group-sauces"></div>
+                </div>
+                <button class="btn-ai" id="findRecipeBtn">🤖 Найти рецепты (AI подбор)</button>
+                <button class="btn-ai btn-reset" id="resetBtn">🔄 Сбросить все</button>
+            </div>
+            <div class="recipes-panel">
+                <div class="section-tabs" id="sectionTabs">
+                    <button class="tab-btn active" data-method="all">🍽️ Все рецепты</button>
+                    <button class="tab-btn" data-method="microwave">📡 Микроволновка</button>
+                    <button class="tab-btn" data-method="airfryer">💨 Аэрогриль</button>
+                    <button class="tab-btn" data-method="oven">🔥 Духовка</button>
+                    <button class="tab-btn" data-method="cold">❄️ Без подогрева</button>
+                    <button class="tab-btn" data-method="boil">🍲 Варить в кастрюле</button>
+                </div>
+                <h2>🍳 Блюда по вашему запросу <span id="recipeCount" style="font-size:1rem;"></span></h2>
+                <div id="recipesList"></div>
+                <div class="premium-banner">
+                    🧠 Хочешь персонализированный план питания на неделю?
+                    <br><strong>БыстроБот Premium</strong> — 20 эксклюзивных рецептов + доставка.
+                    <br><button id="premiumBtn">Подробнее о подписке →</button>
+                </div>
+            </div>
+        </div>
+        <footer>✨ Готовь быстро, вкусно, без стресса. 100 рецептов для вдохновения!</footer>
+    </div>
+    <div id="recipeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">📖 Подробный рецепт</h2>
+                <button class="close-modal" id="closeModalBtn">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
