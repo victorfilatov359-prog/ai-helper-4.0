@@ -3,72 +3,256 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>БыстроБот — 100+ рецептов | AI помощник</title>
-    <link rel="stylesheet" href="style.css">
+    <title>БыстроБот — 200 уникальных рецептов | AI помощник</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <div class="badge">⚡ AI-помощник • 120+ рецептов • до 15 минут</div>
+            <div class="badge">⚡ AI-помощник • 200 уникальных рецептов • до 20 минут</div>
             <h1>БыстроБот</h1>
-            <div class="subhead">Выбери продукты из холодильника — AI подберет рецепты с этими продуктами</div>
+            <div class="subhead">Выбери продукты из холодильника — AI подберет рецепты, которые точно можно приготовить</div>
             <div class="stats" id="stats"></div>
         </div>
         <div class="grid">
             <div class="filters-panel">
-                <h2>🥕 Что у вас есть?</h2>
+                <h2>🥕  Что у вас есть?</h2>
                 <div class="ingredient-group">
-                    <label>🥩 Мясо & Рыба</label>
+                    <label>🥩  Мясо & Рыба</label>
                     <div class="checkbox-grid" id="group-protein"></div>
                 </div>
                 <div class="ingredient-group">
-                    <label>🥚 Яйца & Молочка</label>
+                    <label>🥚  Яйца & Молочка</label>
                     <div class="checkbox-grid" id="group-dairy"></div>
                 </div>
                 <div class="ingredient-group">
-                    <label>🥦 Овощи & Зелень</label>
+                    <label>🥦  Овощи & Зелень</label>
                     <div class="checkbox-grid" id="group-veggies"></div>
                 </div>
                 <div class="ingredient-group">
-                    <label>🍝 Бакалея & Крупы</label>
+                    <label>🍝  Бакалея & Крупы</label>
                     <div class="checkbox-grid" id="group-pantry"></div>
                 </div>
                 <div class="ingredient-group">
-                    <label>🧂 Соусы & Специи</label>
+                    <label>🧂  Соусы & Специи</label>
                     <div class="checkbox-grid" id="group-sauces"></div>
                 </div>
-                <button class="btn-ai" id="findRecipeBtn">🤖 Найти рецепты (AI подбор)</button>
-                <button class="btn-ai btn-reset" id="resetBtn">🔄 Сбросить все</button>
+                <button class="btn-ai" id="findRecipeBtn">🤖  Найти рецепты (AI подбор)</button>
+                <button class="btn-ai btn-reset" id="resetBtn">🔄  Сбросить все</button>
             </div>
             <div class="recipes-panel">
                 <div class="section-tabs" id="sectionTabs">
-                    <button class="tab-btn active" data-method="all">🍽️ Все рецепты</button>
-                    <button class="tab-btn" data-method="microwave">📡 Микроволновка</button>
-                    <button class="tab-btn" data-method="airfryer">💨 Аэрогриль</button>
-                    <button class="tab-btn" data-method="oven">🔥 Духовка</button>
-                    <button class="tab-btn" data-method="cold">❄️ Без подогрева</button>
-                    <button class="tab-btn" data-method="boil">🍲 Варить в кастрюле</button>
+                    <button class="tab-btn active" data-method="all">🍽️  Все рецепты</button>
+                    <button class="tab-btn" data-method="microwave">📡  Микроволновка</button>
+                    <button class="tab-btn" data-method="airfryer">💨  Аэрогриль</button>
+                    <button class="tab-btn" data-method="oven">🔥  Духовка</button>
+                    <button class="tab-btn" data-method="cold">❄️  Без подогрева</button>
+                    <button class="tab-btn" data-method="boil">🍲  Варить в кастрюле</button>
+                    <button class="tab-btn" data-method="pan">🍳  Сковорода</button>
                 </div>
-                <h2>🍳 Рецепты <span id="recipeCount" style="font-size:1rem;"></span></h2>
+                <h2>🍳  Рецепты <span id="recipeCount" style="font-size:1rem;"></span></h2>
                 <div id="recipesList"></div>
-                <div class="premium-banner">
-                    🧠 Хочешь персонализированный план питания на неделю?
-                    <br><strong>БыстроБот Premium</strong> — 20 эксклюзивных рецептов + доставка.
-                    <br><button id="premiumBtn">Подробнее о подписке →</button>
-                </div>
             </div>
         </div>
-        <footer>✨ Готовь быстро, вкусно, без стресса. Более 120 рецептов для вдохновения!</footer>
+        <footer>✨ 200 уникальных рецептов. Выбирай продукты — AI подскажет, что приготовить!</footer>
     </div>
     <div id="recipeModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="modalTitle">📖 Подробный рецепт</h2>
+                <h2 id="modalTitle">📖  Подробный рецепт</h2>
                 <button class="close-modal" id="closeModalBtn">&times;</button>
             </div>
             <div class="modal-body" id="modalBody"></div>
         </div>
     </div>
-    <script src="script.js"></script>
+    <script src="data.js"></script>
+    <script>
+        // ========== ОСНОВНАЯ ЛОГИКА ==========
+        const methodNames = { 
+            pan: "🍳  Сковорода", microwave: "📡  Микроволновка", airfryer: "💨  Аэрогриль", 
+            oven: "🔥  Духовка", cold: "❄️  Без подогрева", boil: "🍲  Варить в кастрюле"
+        };
+        let currentMethodFilter = "all";
+        let currentRecipes = [];
+
+        function getSelectedIngredients() { 
+            return Array.from(document.querySelectorAll('input[name="ingredient"]:checked')).map(cb => cb.value); 
+        }
+        function getMethodLabel(m) { return methodNames[m] || "🍳  Плита"; }
+
+        function findRecipesBySelectedProducts(selected) {
+            if (!selected.length) return [];
+            const lowerSelected = selected.map(s => s.toLowerCase());
+            const matched = RECIPES.filter(recipe => {
+                const recipeIngs = recipe.ingredients.map(i => i.toLowerCase());
+                return recipeIngs.some(ing => lowerSelected.includes(ing));
+            });
+            const scored = matched.map(recipe => {
+                const recipeIngs = recipe.ingredients.map(i => i.toLowerCase());
+                const matchCount = lowerSelected.filter(ing => recipeIngs.includes(ing)).length;
+                const score = matchCount / recipe.ingredients.length;
+                return { recipe, score };
+            });
+            scored.sort((a, b) => b.score - a.score);
+            const results = scored.map(item => ({ ...item.recipe, matchScore: Math.round(item.score * 100) }));
+            return results.slice(0, 40);
+        }
+
+        function getAllRecipesByMethod(method) {
+            if (method === "all") return RECIPES.slice(0, 50);
+            return RECIPES.filter(r => r.method === method).slice(0, 50);
+        }
+
+        function renderRecipes(recipes) {
+            currentRecipes = recipes;
+            const container = document.getElementById("recipesList");
+            const countSpan = document.getElementById("recipeCount");
+            countSpan.textContent = recipes.length ? `(${recipes.length} рецептов)` : `(нет)`;
+            if (!recipes.length) {
+                container.innerHTML = `<div class="empty-state">🤷  Нет рецептов с выбранными продуктами.<br><br>💡  Попробуйте выбрать другие продукты.</div>`;
+                return;
+            }
+            let html = "";
+            for (let rec of recipes) {
+                const matchInfo = rec.matchScore ? `<span class="match-score">совпадение ${rec.matchScore}%</span>` : '';
+                html += `<div class="recipe-card">
+                    <h3>${rec.name} ${matchInfo} <span class="method-tag">${getMethodLabel(rec.method)}</span></h3>
+                    <div class="meta"><span>⏱️  ${rec.time}</span></div>
+                    <div><strong>🥗  Ингредиенты:</strong> ${rec.ingredients.join(", ")}</div>
+                    <div class="steps-list"><strong>📋 Кратко:</strong> ${rec.steps.substring(0, 80)}...</div>
+                    <button class="btn-detail" data-id="${rec.id}">📖  Подробнее</button>
+                    <hr><div style="font-size:0.8rem; color:#b97f44;">✨ AI подобрал рецепт по вашим продуктам</div>
+                </div>`;
+            }
+            container.innerHTML = html;
+            attachDetailEvents();
+        }
+
+        function showSectionRecipes(method) {
+            const sectionRecipes = getAllRecipesByMethod(method);
+            currentRecipes = sectionRecipes;
+            const container = document.getElementById("recipesList");
+            const countSpan = document.getElementById("recipeCount");
+            countSpan.textContent = sectionRecipes.length ? `(${sectionRecipes.length} рецептов)` : `(нет рецептов)`;
+            if (!sectionRecipes.length) {
+                container.innerHTML = `<div class="empty-state">🤷  В разделе "${getMethodLabel(method)}" пока нет рецептов.</div>`;
+                return;
+            }
+            let html = "";
+            for (let rec of sectionRecipes) {
+                html += `<div class="recipe-card">
+                    <h3>${rec.name} <span class="method-tag">${getMethodLabel(rec.method)}</span></h3>
+                    <div class="meta"><span>⏱️  ${rec.time}</span></div>
+                    <div><strong>🥗  Ингредиенты:</strong> ${rec.ingredients.join(", ")}</div>
+                    <div class="steps-list"><strong>📋 Кратко:</strong> ${rec.steps.substring(0, 80)}...</div>
+                    <button class="btn-detail" data-id="${rec.id}">📖  Подробнее</button>
+                    <hr><div style="font-size:0.8rem; color:#b97f44;">✨ Рецепт из раздела ${getMethodLabel(rec.method)}</div>
+                </div>`;
+            }
+            container.innerHTML = html;
+            attachDetailEvents();
+        }
+
+        function attachDetailEvents() {
+            document.querySelectorAll('.btn-detail').forEach(btn => {
+                btn.addEventListener('click', (e) => { 
+                    const id = parseInt(btn.dataset.id); 
+                    const recipe = RECIPES.find(r => r.id === id); 
+                    if (recipe) openModal(recipe); 
+                });
+            });
+        }
+
+        function openModal(recipe) {
+            const modal = document.getElementById("recipeModal");
+            document.getElementById("modalTitle").innerHTML = `📖  ${recipe.name}`;
+            let stepsHtml = `<p><strong>⏱️  ${recipe.time}</strong> | ${getMethodLabel(recipe.method)}</p><h3>📝  Приготовление:</h3>`;
+            const stepsArr = recipe.detailedSteps || recipe.steps.split('\n').filter(s => s.trim());
+            stepsArr.forEach((step, idx) => { if(step.trim()) stepsHtml += `<div class="modal-step"><div class="step-number">${idx+1}</div><div>${step}</div></div>`; });
+            stepsHtml += `<h3>🥗  Ингредиенты:</h3><ul>${recipe.ingredients.map(ing => `<li>${ing}</li>`).join('')}</ul>`;
+            document.getElementById("modalBody").innerHTML = stepsHtml;
+            modal.style.display = "block"; document.body.style.overflow = "hidden";
+        }
+
+        function closeModal() { 
+            document.getElementById("recipeModal").style.display = "none"; 
+            document.body.style.overflow = "auto"; 
+        }
+
+        function updateStats() { 
+            const s = getSelectedIngredients(); 
+            document.getElementById("stats").innerHTML = `<div class="stat-card">📦 Выбрано: ${s.length}</div><div class="stat-card">🍽️  Всего рецептов: ${RECIPES.length}</div>`; 
+        }
+
+        async function handleAISearch() {
+            const selected = getSelectedIngredients();
+            if (!selected.length) { 
+                document.getElementById("recipesList").innerHTML = '<div class="loading">🤷  Выберите хотя бы один продукт!</div>'; 
+                return; 
+            }
+            document.getElementById("recipesList").innerHTML = '<div class="loading">🤖  AI анализирует ваши продукты и подбирает рецепты...</div>';
+            await new Promise(r => setTimeout(r, 400));
+            const matched = findRecipesBySelectedProducts(selected);
+            renderRecipes(matched);
+            updateStats();
+        }
+
+        function resetFilters() { 
+            document.querySelectorAll('input[name="ingredient"]').forEach(cb => cb.checked = false); 
+            updateStats(); 
+            document.getElementById("recipesList").innerHTML = '<div class="loading">✨ Выберите продукты и нажмите «Найти рецепты»<br>⬅️  Или выберите раздел для просмотра всех рецептов</div>'; 
+            document.getElementById("recipeCount").textContent = ''; 
+            currentMethodFilter = "all"; 
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active')); 
+            document.querySelector('.tab-btn[data-method="all"]').classList.add('active');
+            currentRecipes = [];
+        }
+
+        function buildCheckboxes() {
+            const groups = { 
+                "group-protein": proteinGroup, 
+                "group-dairy": dairyGroup, 
+                "group-veggies": veggiesGroup, 
+                "group-pantry": pantryGroup, 
+                "group-sauces": saucesGroup 
+            };
+            for (const [groupId, items] of Object.entries(groups)) {
+                const div = document.getElementById(groupId);
+                if (div) items.forEach(ing => {
+                    const label = document.createElement("label");
+                    const cb = document.createElement("input");
+                    cb.type = "checkbox"; cb.value = ing; cb.name = "ingredient";
+                    label.appendChild(cb); label.appendChild(document.createTextNode(" " + ing));
+                    div.appendChild(label);
+                });
+            }
+        }
+
+        function init() {
+            buildCheckboxes(); 
+            updateStats(); 
+            document.getElementById("recipesList").innerHTML = '<div class="loading">✨ Выберите продукты и нажмите «Найти рецепты»<br>➡️  Или выберите раздел, чтобы посмотреть все рецепты категории</div>';
+            document.getElementById("findRecipeBtn").addEventListener("click", handleAISearch);
+            document.getElementById("resetBtn").addEventListener("click", resetFilters);
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const method = btn.dataset.method;
+                    currentMethodFilter = method;
+                    showSectionRecipes(method);
+                });
+            });
+            const modal = document.getElementById("recipeModal");
+            document.getElementById("closeModalBtn").addEventListener("click", closeModal);
+            modal.addEventListener("click", (e) => { if(e.target === modal) closeModal(); });
+            document.addEventListener("keydown", (e) => { if(e.key === "Escape" && modal.style.display === "block") closeModal(); });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if (typeof RECIPES !== 'undefined') init();
+            else console.error('Массив RECIPES не загружен. Проверьте data.js');
+        });
+    </script>
 </body>
 </html>
